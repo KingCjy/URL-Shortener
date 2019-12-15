@@ -44,3 +44,16 @@ async function generateUrl() {
 
   return result;
 }
+
+export async function findRedirectUrl (key) {
+  const connection = await db.getConnection();
+
+  let redirectUrl;
+  if(isNaN(key) == false) {
+      redirectUrl = await db.selectOne(connection, 'SELECT url FROM short_url WHERE id = ?', [key]);
+      return redirectUrl.url;
+  }  
+  
+  redirectUrl = await db.selectOne(connection, 'SELECT url FROM short_url WHERE short_url = ?', [key])
+  return redirectUrl.url;
+}

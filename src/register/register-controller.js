@@ -22,3 +22,10 @@ export async function register (req, res) {
   res.status(201);
   res.json({ url: 'http://localhost:3000/' + shortUrl });
 }
+
+export async function redirectUrl (req, res) {
+  const key = req.params.url;
+  let redirectUrl = await registerService.findRedirectUrl(key);
+
+  res.redirect(301, decodeURIComponent(redirectUrl));
+}
