@@ -25,7 +25,16 @@ export async function register (req, res) {
 
 export async function redirectUrl (req, res) {
   const key = req.params.url;
+  
   let redirectUrl = await registerService.findRedirectUrl(key);
 
-  res.redirect(301, decodeURIComponent(redirectUrl));
+  res.status(301).redirect(decodeURIComponent(redirectUrl));
+}
+
+export async function stats (req, res) {
+  const key = req.params.url;
+
+  let result = await registerService.stats(key);
+
+  res.json({...result});
 }
